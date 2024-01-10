@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://hi6it7ho4k63"]
+
+[ext_resource type="PackedScene" uid="uid://dm067qvi0h7ow" path="res://land_loader_modena.tscn" id="1_aru4v"]
+
+[node name="MainScene" type="Node2D"]
+
+[node name="LandLoader" parent="." instance=ExtResource("1_aru4v")]
