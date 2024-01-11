@@ -1,35 +1,33 @@
 using Godot;
-using System;
-using System.Net.Sockets;
-using System.Net.Http;
-using static Godot.HttpRequest;
+using System.Text.Json.Nodes;
+using System.Collections.Generic;
 
 public partial class NetworkManager : Node
 {
     public enum States
     {
         Unconnected,
-        Waiting,
         Connecting,
         Connected
     }
 
     private WebSocketPeer ws;
 
-    public int IdPlayer;
+    public int PlayerId;
+    public List<string>[] Lands;
     public States State = States.Unconnected;
 	public override void _Ready()
 	{
+        Lands = new List<string>[2];
+        for (int i = 0; i < Lands.Length; i++)
+        {
+            Lands[i] = new List<string>();
+        }
 	}
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-        if (State==States.Connecting)
-        {
-            State = States.Connected;
-            GetParent<SceneManager>().LoadModena();
-        }
         if(State!=States.Unconnected)
         {
             ws.Poll();
@@ -39,10 +37,20 @@ public partial class NetworkManager : Node
                 while (ws.GetAvailablePacketCount() > 0)
                 {
                     string data = System.Text.Encoding.Default.GetString(ws.GetPacket());
-                    if (State == States.Waiting)
+                    if (State == States.Connecting)
                     {
                         State = States.Connecting;
-                        IdPlayer = int.Parse(data);
+                        JsonNode json = JsonNode.Parse(data);
+                        PlayerId = int.Parse(json["id"].ToString());
+                        foreach (var lands in json["lands"].AsObject())
+                        {
+                            foreach (string land in lands.Value.AsArray())
+                            {
+                                Lands[int.Parse(lands.Key)].Add(land);
+                            }
+                        }
+                        var modena = GetParent<SceneManager>().LoadModena();
+
                     }
                     else if(State==States.Connected){
                         GD.Print("ricevuto: "+data);
@@ -60,7 +68,7 @@ public partial class NetworkManager : Node
 
         ws = new WebSocketPeer();
         ws.ConnectToUrl("ws://" + ip + ":" + port);
-        State = States.Waiting;
+        State = States.Connecting;
     }
 
     public void Send(string data)

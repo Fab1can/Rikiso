@@ -56,8 +56,14 @@ playersInGame = []
 
 function startGame(){
 	console.log("Game started")
+	const playerLands = dividiBorders();
+	let lands = {};
+	for (id in players){
+		lands[id]=playerLands[id];
+	}
 	for(id in players){
-		players[id].send(id);
+		let obj = {id: id, lands: lands}
+		players[id].send(JSON.stringify(obj));
 		playersInGame.push(players[id]);
 	}
 }

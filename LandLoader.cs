@@ -43,7 +43,18 @@ public partial class LandLoader : Node
         {
             landPrefabs[i] = (LandPrefab)children[i];
             landPrefabs[i].LandLoader = this;
-            landPrefabs[i].TeamTexture = teamTextures[networkManager.IdPlayer];
+            var a = System.Array.Find(
+                        networkManager.Lands,
+                        (x) => x.Contains(landPrefabs[i].Name)
+                    );
+            var b = System.Array.IndexOf(
+                    networkManager.Lands,
+                    a
+
+                );
+            landPrefabs[i].TeamTexture = teamTextures[
+                b
+            ];
             listaConfini += "\"" + landPrefabs[i].Name + "\":["+string.Join(",", landPrefabs[i].Borders.Select(x => "\""+x.Name+"\""))+"],\n";
             
         }
@@ -59,7 +70,7 @@ public partial class LandLoader : Node
 
     public void Select(LandPrefab land)
     {
-        networkManager.Send(colors[networkManager.IdPlayer] + " ha selezionato " + land.Name);
+        networkManager.Send(colors[networkManager.PlayerId] + " ha selezionato " + land.Name);
         foreach (LandPrefab landp in landPrefabs)
         {
             landp.CursorTexture = NoneTexture;

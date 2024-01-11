@@ -13,12 +13,13 @@ public partial class SceneManager : Node2D
 	{
 	}
 
-	public void LoadModena()
+	public LandLoader LoadModena()
 	{
 		RemoveChild(GetNode("Menu"));
         LandLoader modena = (LandLoader)GD.Load<PackedScene>("res://land_loader_modena.tscn").Instantiate();
 		AddChild(modena);
         Control ui = (Control)GD.Load<PackedScene>("res://ui.tscn").Instantiate();
         AddChild(ui);
+		return modena;
     }
 }
