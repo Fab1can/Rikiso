@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvlfs75fx8aya"]
+
+[ext_resource type="Script" path="res://Scripts/ButtonAttack.cs" id="1_6un0g"]
+
+[node name="AttackControl" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Attack1" type="Button" parent="."]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Attacca con 1"
+script = ExtResource("1_6un0g")
+Quantity = 1
+
+[node name="Attack2" type="Button" parent="."]
+layout_mode = 0
+offset_top = 36.0
+offset_right = 111.0
+offset_bottom = 67.0
+text = "Attacca con 2"
+script = ExtResource("1_6un0g")
+Quantity = 2
+
+[node name="Attack3" type="Button" parent="."]
+layout_mode = 0
+offset_top = 72.0
+offset_right = 111.0
+offset_bottom = 103.0
+text = "Attacca con 3"
+script = ExtResource("1_6un0g")
+Quantity = 3
+
+[node name="Cancel" type="Button" parent="."]
+layout_mode = 0
+offset_top = 109.0
+offset_right = 111.0
+offset_bottom = 140.0
+text = "Annulla"

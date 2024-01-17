@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6eowi4gtbgo"]
+
+[ext_resource type="Script" path="res://Scripts/LandPrefab.cs" id="1_6r0mn"]
+[ext_resource type="Script" path="res://Scripts/LandMouseHandler.cs" id="1_s40s1"]
+[ext_resource type="Texture2D" uid="uid://cnb2kv7afkwt7" path="res://Textures/Box/Teams/black.png" id="2_o77f6"]
+[ext_resource type="Texture2D" uid="uid://d3ni216k67exl" path="res://Textures/Box/Cursors/none.png" id="3_xbid3"]
+
+[node name="LandPrefab" type="Node2D"]
+script = ExtResource("1_6r0mn")
+
+[node name="MouseHandler" type="Node" parent="."]
+script = ExtResource("1_s40s1")
+
+[node name="Team" type="Sprite2D" parent="."]
+texture = ExtResource("2_o77f6")
+
+[node name="Cursor" type="Sprite2D" parent="."]
+texture = ExtResource("3_xbid3")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -9.0
+offset_top = -9.0
+offset_right = 9.0
+offset_bottom = 9.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Troops" type="Label" parent="Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "1"

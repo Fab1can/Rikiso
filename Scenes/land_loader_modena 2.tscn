@@ -1,0 +1,119 @@
+[gd_scene load_steps=4 format=3 uid="uid://kdbx7ehvxgw7"]
+
+[ext_resource type="Script" path="res://Scripts/LandLoader.cs" id="1_ojl7i"]
+[ext_resource type="Texture2D" uid="uid://cnla3usnmmcoc" path="res://mappa_modena.png" id="2_7arv4"]
+[ext_resource type="PackedScene" uid="uid://b6eowi4gtbgo" path="res://Scenes/land_prefab.tscn" id="3_y4yvq"]
+
+[node name="LandLoader" type="Node"]
+script = ExtResource("1_ojl7i")
+
+[node name="MappaModena" type="Sprite2D" parent="."]
+position = Vector2(579, 320.5)
+scale = Vector2(0.620594, 0.620594)
+texture = ExtResource("2_7arv4")
+
+[node name="Albareto" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(788, 175)
+
+[node name="Amendola Est" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(668, 399)
+
+[node name="Amendola Ovest" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("3_y4yvq")]
+position = Vector2(575, 305)
+Borders = [NodePath("../Cognento")]
+
+[node name="Baggiovara" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("3_y4yvq")]
+position = Vector2(509, 455)
+Borders = [NodePath("../Cittanova"), NodePath("../Cognento")]
+
+[node name="Bruciata" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("3_y4yvq")]
+position = Vector2(509, 319)
+Borders = [NodePath("../Cittanova"), NodePath("../Cognento")]
+
+[node name="Cittanova" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("3_y4yvq")]
+position = Vector2(405, 367)
+Borders = [NodePath("../Cognento"), NodePath("../Baggiovara"), NodePath("../Marzaglia"), NodePath("../Bruciata"), NodePath("../Madonnina"), NodePath("../Tre Olmi")]
+
+[node name="Cognento" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("3_y4yvq")]
+position = Vector2(479, 397)
+Borders = [NodePath("../Cittanova"), NodePath("../Baggiovara"), NodePath("../Villaggio Zeta"), NodePath("../Saliceta"), NodePath("../Amendola Ovest"), NodePath("../Bruciata")]
+
+[node name="Collegarola" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(749, 443)
+
+[node name="Crocetta" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(682, 251)
+
+[node name="Fossalta" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(838, 429)
+
+[node name="Ganaceto" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(570, 102)
+
+[node name="La Rotonda" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(705, 462)
+
+[node name="Lesignana" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(560, 173)
+
+[node name="Madonnina" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("3_y4yvq")]
+position = Vector2(614, 271)
+Borders = [NodePath("../Cittanova")]
+
+[node name="Marzaglia" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("3_y4yvq")]
+position = Vector2(324, 363)
+Borders = [NodePath("../Cittanova")]
+
+[node name="Modena Est" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(715, 286)
+
+[node name="Navicello" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(833, 208)
+
+[node name="Paganine" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(696, 588)
+
+[node name="Ponte Alto" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(587, 227)
+
+[node name="Portile" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(710, 535)
+
+[node name="S Damaso" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(808, 509)
+
+[node name="S Donnino" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(809, 564)
+
+[node name="S Maria Mugnano" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(639, 509)
+
+[node name="S Martino Mugnano" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(626, 551)
+
+[node name="S Matteo" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(721, 98)
+
+[node name="S Pancrazio" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(632, 185)
+
+[node name="Saliceta" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("3_y4yvq")]
+position = Vector2(601, 439)
+Borders = [NodePath("../Cognento")]
+
+[node name="Saliceto sul Panaro" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(795, 344)
+
+[node name="Torrenova" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(736, 239)
+
+[node name="Tre Olmi" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("3_y4yvq")]
+position = Vector2(526, 230)
+Borders = [NodePath("../Cittanova")]
+
+[node name="Villaggio Zeta" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("3_y4yvq")]
+position = Vector2(543, 371)
+Borders = [NodePath("../Cognento")]
+
+[node name="Villanova" parent="." instance=ExtResource("3_y4yvq")]
+position = Vector2(638, 134)
