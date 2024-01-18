@@ -10,14 +10,14 @@ config_version=5
 
 [application]
 
-config/name="Risiko"
+config/name="Rikiso"
 run/main_scene="res://Scenes/scene_manager.tscn"
 config/features=PackedStringArray("4.1", "C#", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [dotnet]
 
-project/assembly_name="Risiko"
+project/assembly_name="Rikiso"
 
 [rendering]
 
