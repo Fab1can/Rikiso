@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://beym2omm80mq7"]
+
+[ext_resource type="Script" path="res://Scripts/ButtonTurn.cs" id="1_xb1p2"]
+
+[node name="TurnControl" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Turn" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1078.0
+offset_top = 610.0
+offset_right = 1133.0
+offset_bottom = 641.0
+text = "Turno"
+script = ExtResource("1_xb1p2")

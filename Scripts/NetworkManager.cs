@@ -2,6 +2,7 @@ using Godot;
 using System.Text.Json.Nodes;
 using System.Collections.Generic;
 using System.Text.Json;
+using System;
 
 public partial class NetworkManager : Node
 {
@@ -13,6 +14,8 @@ public partial class NetworkManager : Node
     }
 
     private WebSocketPeer ws;
+
+    private LandLoader landLoader;
 
     public int PlayerTeam;
     public Dictionary<string, (int Team, int Troops)> StartLands;
@@ -41,7 +44,17 @@ public partial class NetworkManager : Node
 
                     }
                     else if(State==States.Connected){
-
+                        GD.Print(json.ToString());
+                        string cmd = json["cmd"].ToString();
+                        switch (cmd)
+                        {
+                            case "attack":
+                                OnAttack(json["lands"]);
+                                break;
+                            case "turn":
+                                onTurn();
+                                break;
+                        }
                     }
                 }
             }
@@ -49,23 +62,40 @@ public partial class NetworkManager : Node
         
     }
 
+    private void onTurn()
+    {
+        landLoader.NextTurn();
+    }
+
+    private void OnAttack(JsonNode lands)
+    {
+        landLoader.UpdateLands(getLands(lands.AsObject()));
+    }
+
+    private Dictionary<string, (int Team, int Troops)> getLands(JsonObject jObj)
+    {
+        Dictionary<string, (int Team, int Troops)> lands = new Dictionary<string, (int Team, int Troops)> ();
+        var landsEnumerator = jObj.GetEnumerator();
+        while (landsEnumerator.MoveNext())
+        {
+            var land = landsEnumerator.Current.Key;
+            var team = int.Parse(landsEnumerator.Current.Value.AsObject()["team"].ToString());
+            var troops = int.Parse(landsEnumerator.Current.Value.AsObject()["troops"].ToString());
+            lands.Add(land, (team, troops));
+        }
+        return lands;
+    }
+
     private void onConnected(JsonNode json)
     {
         State = States.Connected;
         PlayerTeam = int.Parse(json["team"].ToString());
         var lands = json["lands"].AsObject();
-        var _lands = lands.GetEnumerator();
-        while (_lands.MoveNext()) 
-        {
-            var land = _lands.Current.Key;
-            var team = int.Parse(_lands.Current.Value.AsObject()["team"].ToString());
-            var troops = int.Parse(_lands.Current.Value.AsObject()["troops"].ToString());
-            StartLands.Add(land, (team, troops));
-        } 
-        var modena = GetParent<SceneManager>().LoadModena();
+        StartLands = getLands(lands);
+        landLoader = GetParent<SceneManager>().LoadModena();
     }
 
-    public void Attack(LandPrefab attacker, LandPrefab attacked, int troops) {
+    public void SendAttack(LandPrefab attacker, LandPrefab attacked, int troops) {
         var data = new Dictionary<string, object>
         {
             { "cmd","attack" },
@@ -89,5 +119,14 @@ public partial class NetworkManager : Node
     public void Send(string data)
     {
         ws.SendText(data);
+    }
+
+    internal void SendTurn()
+    {
+        var data = new Dictionary<string, object>
+        {
+            { "cmd","turn" }
+        };
+        Send(JsonSerializer.Serialize(data));
     }
 }

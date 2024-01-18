@@ -36,6 +36,8 @@ const lands = {
 "Villanova": { "borders" : [] },
 }
 
+let turn;
+
 function assignLands(playersNum) {
 	let array = Object.keys(lands);
 	// Mescola l'array casualmente
@@ -52,35 +54,84 @@ playersInGame = []
 
 function startGame(){
 	console.log("Game started")
-	assignLands(2);
+	turn=0;
+	playersInGame=[];
+	assignLands(players.length);
 	for(id in players){
-		players[id].send(JSON.stringify({"team": id, "lands": lands}));
+		send(players[id],JSON.stringify({"team": id, "lands": lands}));
 		playersInGame.push(players[id]);
 	}
 }
 
-function onReceive(msg, ws){
+function onReceive(msg, peer){
+	if(playersInGame[turn]!=peer){
+		throw new Error("Cheat");
+	}
 	let obj = JSON.parse(msg);
 	switch(obj["cmd"]){
 		case "attack":
 			onAttack(obj["from"], obj["to"], parseInt(obj["with"]));
+			break;
+		case "turn":
+			onTurn();
 			break;
 	}
 }
 
 function broadcast(msg){
 	playersInGame.forEach(player => {
-		player.send(msg);
+		send(player, msg);
 	});
 }
 
-function onAttack(from, to, troops){
-	let diceAtt = parseInt(Math.random()*6);
-	let diceDef = parseInt(Math.random()*6);
-	if(diceAtt>diceDef){
-		lands[to]-=troops
+function send(peer, msg){
+	console.log(msg);
+	peer.send(msg);
+}
+
+function onAttack(from, to, troopsAtt){
+	if(lands[from]["troops"]-troopsAtt<1||troopsAtt>3){
+		throw new Error("Cheat");
 	}
+	let troopsDef = Math.min(lands[to]["troops"], 3);
+
+	let dicesAtt = []
+	for (let i = 0; i < troopsAtt; i++) {
+		dicesAtt.push(parseInt(Math.random()*6))
+	}
+	dicesAtt.sort();
+
+	let dicesDef = []
+	for (let i = 0; i < troopsAtt; i++) {
+		dicesDef.push(parseInt(Math.random()*6))
+	}
+	dicesDef.sort()
+
+	let lostAtt = 0;
+	let lostDef = 0;
+	for(let i = 0; i< Math.min(troopsAtt, troopsDef); i++){
+		if(dicesAtt[i]>dicesDef[i]){
+			lostDef++;
+		}else{
+			lostAtt++;
+		}
+	}
+
+	lands[to]["troops"]-=lostDef;
+	lands[from]["troops"]-=lostAtt;
+
+	if(lands[to]["troops"]<1){
+		lands[to]["troops"]=troopsAtt
+		lands[from]["troops"]-=troopsAtt;
+		lands[to]["team"]=lands[from]["team"]
+	}
+
 	broadcast(JSON.stringify({"cmd":"attack", "lands":lands}))
+}
+
+function onTurn(){
+	turn = (turn+1)%playersInGame.length;
+	broadcast(JSON.stringify({"cmd":"turn"}))
 }
 
 const wss = new WebSocket.Server({ port: PORT });

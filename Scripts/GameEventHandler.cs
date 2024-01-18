@@ -10,9 +10,15 @@ public partial class GameEventHandler
     private GameEventHandler() { }
 
     public event EventHandler<int> OnAttackPressed;
+    public event EventHandler OnTurnPressed;
 
     public void EmitAttackPressed(int quantity)
     {
         OnAttackPressed?.Invoke(this, quantity);
+    }
+
+    public void EmitTurnPressed()
+    {
+        OnTurnPressed?.Invoke(this, null);
     }
 }

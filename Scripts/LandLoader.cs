@@ -10,6 +10,7 @@ using System.Linq;
 public partial class LandLoader : Node
 {
     public Control AttackControl = GD.Load<PackedScene>("res://Scenes/attack_control.tscn").Instantiate<Control>();
+    public Control TurnControl = GD.Load<PackedScene>("res://Scenes/turn_control.tscn").Instantiate<Control>();
 
     public LandPrefab[] landPrefabs;
 
@@ -21,15 +22,18 @@ public partial class LandLoader : Node
 
     private LandPrefab selected;
     private LandPrefab attacked;
+    private int turn = 0;
+    private int playersNum = 0;
 
     public NetworkManager NetworkManager;
-    public State CurrentState = State.Selecting;
+    public State CurrentState;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         base._Ready();
         GameEventHandler.Instance.OnAttackPressed += HandleAttackPressed;
+        GameEventHandler.Instance.OnTurnPressed += HandleTurnPressed;
         TeamTextures = new Texture2D[colors.Length];
         for (int i = 0; i < colors.Length; i++)
         {
@@ -48,18 +52,38 @@ public partial class LandLoader : Node
             landPrefabs[i] = (LandPrefab)children[i];
             landPrefabs[i].LandLoader = this;
             landPrefabs[i].Team = NetworkManager.StartLands[landPrefabs[i].Name].Team;
+            if (landPrefabs[i].Team>playersNum) { playersNum = landPrefabs[i].Team; }
             landPrefabs[i].Troops = NetworkManager.StartLands[landPrefabs[i].Name].Troops;
             listaTerritori += "\"" + landPrefabs[i].Name + "\": { \"borders\" : ["+string.Join(",", landPrefabs[i].Borders.Select(x => "\""+x.Name+"\""))+"] },\n";
             
         }
+        playersNum++;
         GD.Print(listaTerritori);
 
+        if (NetworkManager.PlayerTeam == 0)
+        {
+            myTurn();
+        }
 
+    }
+
+    private void HandleTurnPressed(object sender, EventArgs e)
+    {
+        NetworkManager.SendTurn();
+    }
+
+    public void UpdateLands(System.Collections.Generic.Dictionary<string, (int Team, int Troops)> lands)
+    {
+        for (int i = 0; i < landPrefabs.Length; i++)
+        {
+            landPrefabs[i].Team = lands[landPrefabs[i].Name].Team;
+            landPrefabs[i].Troops = lands[landPrefabs[i].Name].Troops;
+        }
     }
 
     private void HandleAttackPressed(object sender, int quantity)
     {
-        NetworkManager.Attack(selected, attacked, quantity);
+        NetworkManager.SendAttack(selected, attacked, quantity);
         UnSelect();
         CurrentState = State.Selecting;
     }
@@ -98,13 +122,34 @@ public partial class LandLoader : Node
     public void Attack(LandPrefab land)
     {
         attacked = land;
+        AttackControl.GetNode<Button>("Attack1").Visible = selected.Troops > 1;
+        AttackControl.GetNode<Button>("Attack2").Visible = selected.Troops > 2;
+        AttackControl.GetNode<Button>("Attack3").Visible = selected.Troops > 3;
         AddSibling(AttackControl);
         CurrentState = State.Attacking;
+    }
+
+    internal void NextTurn()
+    {
+        turn = (turn + 1) % playersNum;
+        if (turn != NetworkManager.PlayerTeam) {
+            CurrentState=State.Waiting;
+        } else
+        {
+            myTurn();
+        }
+    }
+
+    private void myTurn()
+    {
+        AddSibling(TurnControl);
+        CurrentState = State.Selecting;
     }
 }
 
 public enum State
 {
     Selecting,
-    Attacking
+    Attacking,
+    Waiting
 }

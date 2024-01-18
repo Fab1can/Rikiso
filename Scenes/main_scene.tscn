@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://1u0857lngqig"]
+[gd_scene load_steps=4 format=3 uid="uid://1u0857lngqig"]
 
 [ext_resource type="PackedScene" uid="uid://dm067qvi0h7ow" path="res://Scenes/land_loader_modena.tscn" id="2_03dxk"]
 [ext_resource type="PackedScene" uid="uid://bvlfs75fx8aya" path="res://Scenes/attack_control.tscn" id="2_fhxbu"]
+[ext_resource type="PackedScene" uid="uid://beym2omm80mq7" path="res://Scenes/turn_control.tscn" id="3_i2rih"]
 
 [node name="MainScene" type="Node2D"]
 
 [node name="AttackControl" parent="." instance=ExtResource("2_fhxbu")]
 
 [node name="LandLoader" parent="." instance=ExtResource("2_03dxk")]
+
+[node name="TurnControl" parent="." instance=ExtResource("3_i2rih")]
