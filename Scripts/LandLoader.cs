@@ -21,8 +21,9 @@ public partial class LandLoader : Node
 
     private LandPrefab selected;
     private LandPrefab attacked;
-    private int turn = 0;
+    private int turn = -1;
     private int playersNum = 0;
+    private int troopsToPlace;
 
     public NetworkManager NetworkManager;
     public State CurrentState = State.Waiting;
@@ -63,12 +64,6 @@ public partial class LandLoader : Node
         }
         playersNum++;
         GD.Print(listaTerritori);
-
-        if (NetworkManager.PlayerTeam == 0)
-        {
-            myTurn();
-        }
-
     }
 
     private void HandleTurnPressed(object sender, EventArgs e)
@@ -87,8 +82,12 @@ public partial class LandLoader : Node
 
     private void HandleAttackPressed(object sender, int quantity)
     {
-        NetworkManager.SendAttack(selected, attacked, quantity);
+        if(quantity > 0)
+        {
+            NetworkManager.SendAttack(selected, attacked, quantity);
+        }
         UnSelect();
+        UI.GetNode<Button>("Turn").Show();
         CurrentState = State.Selecting;
     }
 
@@ -126,6 +125,7 @@ public partial class LandLoader : Node
     public void Attack(LandPrefab land)
     {
         attacked = land;
+        UI.GetNode<Button>("Turn").Hide();
         AttackControl.GetNode<Button>("Attack1").Visible = selected.Troops > 1;
         AttackControl.GetNode<Button>("Attack2").Visible = selected.Troops > 2;
         AttackControl.GetNode<Button>("Attack3").Visible = selected.Troops > 3;
@@ -133,21 +133,48 @@ public partial class LandLoader : Node
         CurrentState = State.Attacking;
     }
 
-    internal void NextTurn()
+    internal void NextTurn(int troops)
     {
+        UnSelect();
         turn = (turn + 1) % playersNum;
         if (turn != NetworkManager.PlayerTeam) {
             CurrentState=State.Waiting;
+            UI.GetNode<Label>("YourTurn").Hide();
         } else
         {
+            troopsToPlace = troops;
             myTurn();
         }
     }
 
     private void myTurn()
     {
-        UI.GetNode<Button>("Turn").Show();
-        CurrentState = State.Selecting;
+        UI.GetNode<Label>("YourTurn").Show();
+        if (troopsToPlace > 0)
+        {
+            CurrentState = State.Placing;
+        }
+        else
+        {
+            CurrentState = State.Selecting;
+        }
+    }
+
+    internal void Place(LandPrefab land)
+    {
+        land.Troops++;
+        troopsToPlace--;
+        NetworkManager.Place(land);
+        if(troopsToPlace == 0)
+        {
+            CurrentState = State.Selecting;
+            UI.GetNode<Button>("Turn").Show();
+        }
+    }
+
+    internal void Place(string land)
+    {
+        
     }
 }
 
@@ -155,5 +182,6 @@ public enum State
 {
     Selecting,
     Attacking,
-    Waiting
+    Waiting,
+    Placing
 }

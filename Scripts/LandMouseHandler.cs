@@ -19,15 +19,23 @@ public partial class LandMouseHandler : Node
 
     public override void _Input(InputEvent @event)
     {
-        if(Land.LandLoader.CurrentState!=State.Selecting) { return; }
+        if(Land.LandLoader.CurrentState!=State.Selecting&&Land.LandLoader.CurrentState!=State.Placing) { return; }
         if (@event is InputEventMouseButton mouse)
         {
             int buttonId = (int)mouse.ButtonIndex;
-			if(buttonId != (int)MouseButton.Left && mouse.Pressed) { return; }
+			if(buttonId != (int)MouseButton.Left || mouse.Pressed) { return; }
             if (!Land.Rect.HasPoint(Land.ToLocal(mouse.Position))) { return; }
             if (Land.Selection == Selection.NotSelected && Land.LandLoader.NetworkManager.PlayerTeam == Land.Team)
             {
-                Land.LandLoader.Select(Land);
+                if (Land.LandLoader.CurrentState == State.Selecting)
+                {
+                    Land.LandLoader.Select(Land);
+                }
+                else
+                {
+                    Land.LandLoader.Place(Land);
+                }
+                
             }
             if (Land.Selection == Selection.Border)
             {

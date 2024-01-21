@@ -40,3 +40,4 @@ offset_top = 109.0
 offset_right = 111.0
 offset_bottom = 140.0
 text = "Annulla"
+script = ExtResource("1_6un0g")

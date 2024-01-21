@@ -1,42 +1,43 @@
-const PORT = 1337
+const PORT = 18000
 const WebSocket = require('ws');
 
 const lands = {
-	"Albareto": { "borders" : [] },
-"Amendola Est": { "borders" : [] },
-"Amendola Ovest": { "borders" : ["Cognento"] },
-"Baggiovara": { "borders" : ["Cittanova","Cognento"] },
-"Bruciata": { "borders" : ["Cittanova","Cognento"] },
+	"Albareto": { "borders" : ["S Matteo","Crocetta","Torrenova","Navicello"] },
+"Amendola Est": { "borders" : ["Modena Est","Fossalta","Collegarola","La Rotonda","Saliceta","Amendola Ovest"] },
+"Amendola Ovest": { "borders" : ["Cognento","Amendola Est","Villaggio Zeta","Bruciata","Madonnina","Saliceta"] },
+"Baggiovara": { "borders" : ["Cittanova","Cognento","Saliceta","S Maria Mugnano","S Martino Mugnano"] },
+"Bruciata": { "borders" : ["Cittanova","Cognento","Amendola Ovest"] },
 "Cittanova": { "borders" : ["Cognento","Baggiovara","Marzaglia","Bruciata","Madonnina","Tre Olmi"] },
 "Cognento": { "borders" : ["Cittanova","Baggiovara","Villaggio Zeta","Saliceta","Amendola Ovest","Bruciata"] },
-"Collegarola": { "borders" : [] },
-"Crocetta": { "borders" : [] },
-"Fossalta": { "borders" : [] },
-"Ganaceto": { "borders" : [] },
-"La Rotonda": { "borders" : [] },
-"Lesignana": { "borders" : [] },
-"Madonnina": { "borders" : ["Cittanova"] },
+"Collegarola": { "borders" : ["Amendola Est","La Rotonda","S Damaso","Fossalta","Portile"] },
+"Crocetta": { "borders" : ["Albareto","S Matteo","Ponte Alto","Madonnina","Torrenova","Modena Est"] },
+"Fossalta": { "borders" : ["Modena Est","Amendola Est","Collegarola","S Damaso","Saliceto sul Panaro"] },
+"Ganaceto": { "borders" : ["Villanova","Lesignana"] },
+"La Rotonda": { "borders" : ["Amendola Est","Saliceta","S Maria Mugnano","Portile","Collegarola"] },
+"Lesignana": { "borders" : ["Villanova","Ganaceto","S Pancrazio","Tre Olmi","Ponte Alto"] },
+"Madonnina": { "borders" : ["Cittanova","Ponte Alto","Crocetta","Modena Est","Amendola Ovest","Tre Olmi"] },
 "Marzaglia": { "borders" : ["Cittanova"] },
-"Modena Est": { "borders" : [] },
-"Navicello": { "borders" : [] },
-"Paganine": { "borders" : [] },
-"Ponte Alto": { "borders" : [] },
-"Portile": { "borders" : [] },
-"S Damaso": { "borders" : [] },
-"S Donnino": { "borders" : [] },
-"S Maria Mugnano": { "borders" : [] },
-"S Martino Mugnano": { "borders" : [] },
-"S Matteo": { "borders" : [] },
-"S Pancrazio": { "borders" : [] },
-"Saliceta": { "borders" : ["Cognento"] },
-"Saliceto sul Panaro": { "borders" : [] },
-"Torrenova": { "borders" : [] },
-"Tre Olmi": { "borders" : ["Cittanova"] },
-"Villaggio Zeta": { "borders" : ["Cognento"] },
-"Villanova": { "borders" : [] },
+"Modena Est": { "borders" : ["Crocetta","Madonnina","Torrenova","Navicello","Saliceto sul Panaro","Fossalta","Amendola Est"] },
+"Navicello": { "borders" : ["Albareto","Modena Est","Saliceto sul Panaro","Torrenova"] },
+"Paganine": { "borders" : ["Portile","S Martino Mugnano"] },
+"Ponte Alto": { "borders" : ["S Matteo","Lesignana","Tre Olmi","S Pancrazio","Madonnina","Crocetta"] },
+"Portile": { "borders" : ["La Rotonda","Collegarola","S Damaso","S Donnino","Paganine","S Maria Mugnano"] },
+"S Damaso": { "borders" : ["Collegarola","Portile","S Donnino","Fossalta"] },
+"S Donnino": { "borders" : ["Portile","S Damaso"] },
+"S Maria Mugnano": { "borders" : ["La Rotonda","Portile","Baggiovara","S Martino Mugnano"] },
+"S Martino Mugnano": { "borders" : ["S Maria Mugnano","Baggiovara","Paganine"] },
+"S Matteo": { "borders" : ["Albareto","Crocetta","Ponte Alto","S Pancrazio","Villanova"] },
+"S Pancrazio": { "borders" : ["S Matteo","Villanova","Lesignana","Ponte Alto"] },
+"Saliceta": { "borders" : ["Cognento","Amendola Est","Amendola Ovest","Baggiovara","La Rotonda","Villaggio Zeta"] },
+"Saliceto sul Panaro": { "borders" : ["Modena Est","Fossalta","Navicello"] },
+"Torrenova": { "borders" : ["Albareto","Crocetta","Modena Est","Navicello"] },
+"Tre Olmi": { "borders" : ["Cittanova","Lesignana","Ponte Alto","Madonnina"] },
+"Villaggio Zeta": { "borders" : ["Cognento","Amendola Ovest","Saliceta"] },
+"Villanova": { "borders" : ["S Matteo","S Pancrazio","Lesignana","Ganaceto"] },
 }
 
 let turn;
+let placing;
 let readyPlayers = 0;
 let players = []
 let playersInGame = []
@@ -54,7 +55,7 @@ function assignLands(playersNum) {
 
 function startGame(){
 	console.log("Game started")
-	turn=0;
+	turn=-1;
 	readyPlayers=0;
 	playersInGame=[];
 	assignLands(players.length);
@@ -62,6 +63,15 @@ function startGame(){
 		send(players[id],JSON.stringify({"team": id, "lands": lands}));
 		playersInGame.push(players[id]);
 	}
+	onTurn();
+}
+
+function getTeamLandsCount(team){
+	let count = 0;
+	for(land in lands){
+		if(lands[land]["team"]==team) count++;
+	}
+	return count;
 }
 
 function isInGame(){
@@ -82,7 +92,19 @@ function onReceive(msg, peer){
 			break;
 		case "ready":
 			onReady(obj["value"]);
+			break;
+		case "place":
+			onPlace(obj["land"]);
+			break;
 	}
+}
+
+function onPlace(land){
+	if(lands[land]["team"]!=turn){
+		throw new Error("Cheat");
+	}
+	lands[land]["troops"]++;
+	broadcastGameObj({"cmd":"place", "lands":lands});
 }
 
 function broadcastGame(msg){
@@ -152,7 +174,7 @@ function onAttack(from, to, troopsAtt){
 
 function onTurn(){
 	turn = (turn+1)%playersInGame.length;
-	broadcastGameObj({"cmd":"turn"});
+	broadcastGameObj({"cmd":"turn", "troops":parseInt(getTeamLandsCount(turn)/3)});
 }
 
 function onReady(value){
@@ -189,7 +211,7 @@ wss.on('connection', function connection(ws) {
 
 	console.log("Player connected");
 	players.push(ws);
-  });
+});
 
 
 

@@ -24,3 +24,11 @@ offset_left = 1091.0
 offset_top = 18.0
 offset_right = 1131.0
 offset_bottom = 41.0
+
+[node name="YourTurn" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1038.0
+offset_top = 103.0
+offset_right = 1138.0
+offset_bottom = 129.0
+text = "È il tuo turno"

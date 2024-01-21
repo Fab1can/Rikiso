@@ -3,6 +3,8 @@ using System.Text.Json.Nodes;
 using System.Collections.Generic;
 using System.Text.Json;
 using System;
+using System.IO;
+using static Godot.Projection;
 
 public partial class NetworkManager : Node
 {
@@ -52,7 +54,10 @@ public partial class NetworkManager : Node
                                 OnAttack(json["lands"]);
                                 break;
                             case "turn":
-                                onTurn();
+                                onTurn(int.Parse(json["troops"].ToString()));
+                                break;
+                            case "place":
+                                onPlace(json["lands"]);
                                 break;
                         }
                     }
@@ -62,9 +67,14 @@ public partial class NetworkManager : Node
         
     }
 
-    private void onTurn()
+    private void onPlace(JsonNode lands)
     {
-        landLoader.NextTurn();
+        landLoader.UpdateLands(getLands(lands.AsObject()));
+    }
+
+    private void onTurn(int troops)
+    {
+        landLoader.NextTurn(troops);
     }
 
     private void OnAttack(JsonNode lands)
@@ -108,8 +118,16 @@ public partial class NetworkManager : Node
 
     public void StartClient()
     {
-        string ip = "127.0.0.1";
-        int port = 1337;
+        if (!File.Exists("address.txt"))
+        {
+            using (StreamWriter outputFile = new StreamWriter("address.txt"))
+            {
+                outputFile.WriteLine("127.0.0.1");
+            }
+        }
+        
+        string ip = File.ReadAllLines("address.txt")[0];
+        int port = 18000;
 
         ws = new WebSocketPeer();
         ws.ConnectToUrl("ws://" + ip + ":" + port);
@@ -136,6 +154,16 @@ public partial class NetworkManager : Node
         {
             { "cmd","ready" },
             { "value" , value }
+        };
+        Send(JsonSerializer.Serialize(data));
+    }
+
+    internal void Place(LandPrefab land)
+    {
+        var data = new Dictionary<string, object>
+        {
+            { "cmd","place" },
+            { "land" , land.Name.ToString() }
         };
         Send(JsonSerializer.Serialize(data));
     }
