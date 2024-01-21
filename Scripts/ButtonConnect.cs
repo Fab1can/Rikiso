@@ -6,9 +6,10 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 
-public partial class ServerButton : Button
+public partial class ButtonConnect : Button
 {
 	private NetworkManager networkManager;
+	[Export] private ButtonReady buttonReady;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -27,5 +28,7 @@ public partial class ServerButton : Button
         base._Pressed();
         Thread clientThread = new Thread(networkManager.StartClient);
         clientThread.Start();
+		buttonReady.Disabled = false;
+		Disabled = true;
     }
 }

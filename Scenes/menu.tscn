@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://btxosbf0x7rq"]
+[gd_scene load_steps=3 format=3 uid="uid://c4jx5pwuqj8ek"]
 
-[ext_resource type="Script" path="res://Scripts/ServerButton.cs" id="1_k2t4w"]
+[ext_resource type="Script" path="res://Scripts/ButtonConnect.cs" id="1_mpqbt"]
+[ext_resource type="Script" path="res://Scripts/ButtonReady.cs" id="2_3h1s2"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -10,11 +11,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Button" type="Button" parent="."]
+[node name="Connect" type="Button" parent="." node_paths=PackedStringArray("buttonReady")]
 layout_mode = 0
 offset_left = 504.0
 offset_top = 167.0
 offset_right = 713.0
 offset_bottom = 291.0
 text = "Connettiti"
-script = ExtResource("1_k2t4w")
+script = ExtResource("1_mpqbt")
+buttonReady = NodePath("../Ready")
+
+[node name="Ready" type="Button" parent="."]
+layout_mode = 0
+offset_left = 503.0
+offset_top = 328.0
+offset_right = 712.0
+offset_bottom = 452.0
+disabled = true
+text = "Pronto"
+script = ExtResource("2_3h1s2")

@@ -37,10 +37,12 @@ const lands = {
 }
 
 let turn;
+let readyPlayers = 0;
+let players = []
+let playersInGame = []
 
 function assignLands(playersNum) {
 	let array = Object.keys(lands);
-	// Mescola l'array casualmente
 	array.sort(() => Math.random() - 0.5);
   
 	for (let i = 0; i < array.length; i++) {
@@ -49,12 +51,11 @@ function assignLands(playersNum) {
 	}
 }
 
-players = []
-playersInGame = []
 
 function startGame(){
 	console.log("Game started")
 	turn=0;
+	readyPlayers=0;
 	playersInGame=[];
 	assignLands(players.length);
 	for(id in players){
@@ -63,8 +64,12 @@ function startGame(){
 	}
 }
 
+function isInGame(){
+	return playersInGame.length>1;
+}
+
 function onReceive(msg, peer){
-	if(playersInGame[turn]!=peer){
+	if(isInGame() && playersInGame[turn]!=peer){
 		throw new Error("Cheat");
 	}
 	let obj = JSON.parse(msg);
@@ -75,17 +80,33 @@ function onReceive(msg, peer){
 		case "turn":
 			onTurn();
 			break;
+		case "ready":
+			onReady(obj["value"]);
 	}
 }
 
-function broadcast(msg){
+function broadcastGame(msg){
 	playersInGame.forEach(player => {
 		send(player, msg);
 	});
 }
 
+function broadcast(msg){
+	players.forEach(player => {
+		send(player, msg);
+	});
+}
+
+function broadcastGameObj(obj){
+	broadcastGame(JSON.stringify(obj));
+}
+
+function broadcastObj(obj){
+	broadcast(JSON.stringify(obj));
+}
+
 function send(peer, msg){
-	console.log(msg);
+	//console.log(msg);
 	peer.send(msg);
 }
 
@@ -123,15 +144,36 @@ function onAttack(from, to, troopsAtt){
 	if(lands[to]["troops"]<1){
 		lands[to]["troops"]=troopsAtt
 		lands[from]["troops"]-=troopsAtt;
-		lands[to]["team"]=lands[from]["team"]
+		lands[to]["team"]=lands[from]["team"];
 	}
 
-	broadcast(JSON.stringify({"cmd":"attack", "lands":lands}))
+	broadcastGameObj({"cmd":"attack", "lands":lands});
 }
 
 function onTurn(){
 	turn = (turn+1)%playersInGame.length;
-	broadcast(JSON.stringify({"cmd":"turn"}))
+	broadcastGameObj({"cmd":"turn"});
+}
+
+function onReady(value){
+	readyPlayers+=value?1:-1; //BISOGNA INSERIRE UN CHECK PER EVITARE CHE UN CLIENT MANDI UN VALORE FRAUDOLENTO
+	if(readyPlayers==players.length&&readyPlayers>1){
+		startGame();
+	}
+}
+
+function endGame(){
+	console.log("Game stopped")
+	broadcastObj({"cmd":"endgame"});
+	playersInGame=[]
+}
+
+function onDisconnect(ws){
+	if(playersInGame.includes(ws)){
+		endGame();
+	}
+	console.log("Player disconnected");
+	players=players.filter((w)=>w!=ws);
 }
 
 const wss = new WebSocket.Server({ port: PORT });
@@ -142,15 +184,11 @@ wss.on('connection', function connection(ws) {
 	  onReceive(message, ws);
 	});
 	ws.on('close', function() {
-        console.log("Player disconnected");
-		players=players.filter((w)=>w!=ws);
+		onDisconnect(ws);
     });
 
 	console.log("Player connected");
 	players.push(ws);
-	if(players.length==2){
-		startGame()	
-	}
   });
 
 

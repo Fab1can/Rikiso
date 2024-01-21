@@ -7,7 +7,7 @@ public partial class ButtonTurn : Button
     {
         base._Pressed();
         GameEventHandler.Instance.EmitTurnPressed();
-        GetParent().GetParent().RemoveChild(GetParent());
+        Hide();
 
     }
 }

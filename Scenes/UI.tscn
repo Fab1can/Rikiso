@@ -1,15 +1,26 @@
-[gd_scene format=3 uid="uid://kq3v1bfygtyg"]
+[gd_scene load_steps=2 format=3 uid="uid://beym2omm80mq7"]
 
-[node name="Control" type="Control"]
+[ext_resource type="Script" path="res://Scripts/ButtonTurn.cs" id="1_u25i3"]
+
+[node name="UI" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
 
-[node name="PlayerLabel" type="Label" parent="."]
+[node name="Turn" type="Button" parent="."]
+visible = false
 layout_mode = 0
-offset_right = 206.0
-offset_bottom = 150.0
-theme_override_font_sizes/font_size = 100
+offset_left = 1078.0
+offset_top = 610.0
+offset_right = 1133.0
+offset_bottom = 641.0
+text = "Turno"
+script = ExtResource("1_u25i3")
+
+[node name="Team" type="Label" parent="."]
+layout_mode = 0
+offset_left = 1091.0
+offset_top = 18.0
+offset_right = 1131.0
+offset_bottom = 41.0

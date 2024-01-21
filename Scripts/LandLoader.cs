@@ -10,7 +10,6 @@ using System.Linq;
 public partial class LandLoader : Node
 {
     public Control AttackControl = GD.Load<PackedScene>("res://Scenes/attack_control.tscn").Instantiate<Control>();
-    public Control TurnControl = GD.Load<PackedScene>("res://Scenes/turn_control.tscn").Instantiate<Control>();
 
     public LandPrefab[] landPrefabs;
 
@@ -26,12 +25,15 @@ public partial class LandLoader : Node
     private int playersNum = 0;
 
     public NetworkManager NetworkManager;
-    public State CurrentState;
+    public State CurrentState = State.Waiting;
+
+    private Control UI;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         base._Ready();
+
         GameEventHandler.Instance.OnAttackPressed += HandleAttackPressed;
         GameEventHandler.Instance.OnTurnPressed += HandleTurnPressed;
         TeamTextures = new Texture2D[colors.Length];
@@ -40,9 +42,11 @@ public partial class LandLoader : Node
             TeamTextures[i] = GD.Load<Texture2D>("res://Textures/Box/Teams/" + colors[i] + ".png");
         }
 
-
+        UI = GetParent().GetNode<Control>("UI");
 
         NetworkManager = GetParent().GetNode<NetworkManager>("NetworkManager");
+
+        UI.GetNode<Label>("Team").Text = colors[NetworkManager.PlayerTeam];
 
         Node[] children = GetChildren().Where(x => x is LandPrefab).ToArray();
         landPrefabs = new LandPrefab[children.Count()];
@@ -142,7 +146,7 @@ public partial class LandLoader : Node
 
     private void myTurn()
     {
-        AddSibling(TurnControl);
+        UI.GetNode<Button>("Turn").Show();
         CurrentState = State.Selecting;
     }
 }

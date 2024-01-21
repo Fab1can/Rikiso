@@ -129,4 +129,14 @@ public partial class NetworkManager : Node
         };
         Send(JsonSerializer.Serialize(data));
     }
+
+    internal void SendReady(bool value)
+    {
+        var data = new Dictionary<string, object>
+        {
+            { "cmd","ready" },
+            { "value" , value }
+        };
+        Send(JsonSerializer.Serialize(data));
+    }
 }

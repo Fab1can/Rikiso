@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/SceneManager.cs" id="1_7xh5k"]
 [ext_resource type="Script" path="res://Scripts/NetworkManager.cs" id="2_44cdx"]
-[ext_resource type="PackedScene" uid="uid://btxosbf0x7rq" path="res://Scenes/menu.tscn" id="3_rwq05"]
+[ext_resource type="PackedScene" uid="uid://c4jx5pwuqj8ek" path="res://Scenes/menu.tscn" id="3_rwq05"]
 
 [node name="SceneManager" type="Node2D"]
 script = ExtResource("1_7xh5k")
