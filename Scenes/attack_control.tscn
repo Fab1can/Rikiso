@@ -2,42 +2,31 @@
 
 [ext_resource type="Script" path="res://Scripts/ButtonAttack.cs" id="1_6un0g"]
 
-[node name="AttackControl" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="AttackControl" type="VBoxContainer"]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 196.0
+grow_vertical = 2
 
 [node name="Attack1" type="Button" parent="."]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
+layout_mode = 2
 text = "Attacca con 1"
 script = ExtResource("1_6un0g")
 Quantity = 1
 
 [node name="Attack2" type="Button" parent="."]
-layout_mode = 0
-offset_top = 36.0
-offset_right = 111.0
-offset_bottom = 67.0
+layout_mode = 2
 text = "Attacca con 2"
 script = ExtResource("1_6un0g")
 Quantity = 2
 
 [node name="Attack3" type="Button" parent="."]
-layout_mode = 0
-offset_top = 72.0
-offset_right = 111.0
-offset_bottom = 103.0
+layout_mode = 2
 text = "Attacca con 3"
 script = ExtResource("1_6un0g")
 Quantity = 3
 
 [node name="Cancel" type="Button" parent="."]
-layout_mode = 0
-offset_top = 109.0
-offset_right = 111.0
-offset_bottom = 140.0
+layout_mode = 2
 text = "Annulla"
 script = ExtResource("1_6un0g")

@@ -7,7 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 
-public partial class LandLoader : Node
+public partial class LandLoader : Control
 {
     public Control AttackControl = GD.Load<PackedScene>("res://Scenes/attack_control.tscn").Instantiate<Control>();
 

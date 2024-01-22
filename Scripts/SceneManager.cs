@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class SceneManager : Node2D
+public partial class SceneManager : Control
 {
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -16,10 +16,11 @@ public partial class SceneManager : Node2D
 	public LandLoader LoadModena()
 	{
 		RemoveChild(GetNode("Menu"));
-        Control ui = (Control)GD.Load<PackedScene>("res://Scenes/UI.tscn").Instantiate();
-        AddChild(ui);
-        LandLoader modena = (LandLoader)GD.Load<PackedScene>("res://Scenes/land_loader_modena.tscn").Instantiate();
+		Control ui = (Control)GD.Load<PackedScene>("res://Scenes/UI.tscn").Instantiate();
+		AddChild(ui);
+		LandLoader modena = (LandLoader)GD.Load<PackedScene>("res://Scenes/land_loader_modena.tscn").Instantiate();
 		AddChild(modena);
+		ui.MoveToFront();
 		return modena;
-    }
+	}
 }

@@ -20,15 +20,15 @@ public partial class ButtonConnect : Button
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-        
+		
 	}
 
-    public override void _Pressed()
-    {
-        base._Pressed();
-        Thread clientThread = new Thread(networkManager.StartClient);
-        clientThread.Start();
+	public override void _Pressed()
+	{
+		base._Pressed();
+		Thread clientThread = new Thread(networkManager.StartClient);
+		clientThread.Start();
 		buttonReady.Disabled = false;
 		Disabled = true;
-    }
+	}
 }

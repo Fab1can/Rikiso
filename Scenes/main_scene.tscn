@@ -1,13 +1,31 @@
 [gd_scene load_steps=4 format=3 uid="uid://1u0857lngqig"]
 
-[ext_resource type="PackedScene" uid="uid://dm067qvi0h7ow" path="res://Scenes/land_loader_modena.tscn" id="2_03dxk"]
+[ext_resource type="PackedScene" uid="uid://3x761ukq142f" path="res://Scenes/land_loader_modena.tscn" id="2_03dxk"]
 [ext_resource type="PackedScene" uid="uid://bvlfs75fx8aya" path="res://Scenes/attack_control.tscn" id="2_fhxbu"]
-[ext_resource type="PackedScene" uid="uid://beym2omm80mq7" path="res://Scenes/turn_control.tscn" id="3_i2rih"]
+[ext_resource type="PackedScene" uid="uid://beym2omm80mq7" path="res://Scenes/UI.tscn" id="3_i2rih"]
 
-[node name="MainScene" type="Node2D"]
+[node name="MainScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="AttackControl" parent="." instance=ExtResource("2_fhxbu")]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
 
-[node name="LandLoader" parent="." instance=ExtResource("2_03dxk")]
+[node name="AttackControl" parent="HBoxContainer" instance=ExtResource("2_fhxbu")]
+layout_mode = 2
 
-[node name="TurnControl" parent="." instance=ExtResource("3_i2rih")]
+[node name="LandLoader" parent="HBoxContainer" instance=ExtResource("2_03dxk")]
+layout_mode = 2
+
+[node name="UI" parent="HBoxContainer" instance=ExtResource("3_i2rih")]
+layout_mode = 2

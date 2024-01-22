@@ -2,33 +2,25 @@
 
 [ext_resource type="Script" path="res://Scripts/ButtonTurn.cs" id="1_u25i3"]
 
-[node name="UI" type="Control"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="UI" type="VBoxContainer"]
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+grow_horizontal = 0
+grow_vertical = 2
 
 [node name="Turn" type="Button" parent="."]
 visible = false
-layout_mode = 0
-offset_left = 1078.0
-offset_top = 610.0
-offset_right = 1133.0
-offset_bottom = 641.0
+layout_mode = 2
 text = "Turno"
 script = ExtResource("1_u25i3")
 
 [node name="Team" type="Label" parent="."]
-layout_mode = 0
-offset_left = 1091.0
-offset_top = 18.0
-offset_right = 1131.0
-offset_bottom = 41.0
+layout_mode = 2
 
 [node name="YourTurn" type="Label" parent="."]
-layout_mode = 0
-offset_left = 1038.0
-offset_top = 103.0
-offset_right = 1138.0
-offset_bottom = 129.0
+visible = false
+layout_mode = 2
 text = "È il tuo turno"

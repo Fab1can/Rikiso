@@ -4,7 +4,13 @@
 [ext_resource type="Script" path="res://Scripts/NetworkManager.cs" id="2_44cdx"]
 [ext_resource type="PackedScene" uid="uid://c4jx5pwuqj8ek" path="res://Scenes/menu.tscn" id="3_rwq05"]
 
-[node name="SceneManager" type="Node2D"]
+[node name="SceneManager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_7xh5k")
 
 [node name="NetworkManager" type="Node" parent="."]
@@ -12,3 +18,8 @@ unique_name_in_owner = true
 script = ExtResource("2_44cdx")
 
 [node name="Menu" parent="." instance=ExtResource("3_rwq05")]
+layout_mode = 1
+offset_left = 326.0
+offset_top = 135.0
+offset_right = -280.0
+offset_bottom = -180.0

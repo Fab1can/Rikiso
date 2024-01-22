@@ -4,8 +4,9 @@ using System;
 using System.Collections.Generic;
 
 [Tool]
-public partial class LandPrefab : Node2D
+public partial class LandPrefab : Control
 {
+
 
     public static Texture2D NoneTexture = GD.Load<Texture2D>("res://Textures/Box/Cursors/none.png");
     public static Texture2D BorderTexture = GD.Load<Texture2D>("res://Textures/Box/Cursors/border.png");
@@ -15,19 +16,26 @@ public partial class LandPrefab : Node2D
     public LandLoader LandLoader { get; set; }
     public LandMouseHandler MouseHandler { get; private set; }
 
-    public Texture2D TeamTexture { get => GetChild<Sprite2D>(1).Texture; private set => GetChild<Sprite2D>(1).Texture = value; }
-    public Texture2D CursorTexture { get => GetChild<Sprite2D>(2).Texture; private set => GetChild<Sprite2D>(2).Texture = value; }
+    public Texture2D TeamTexture { get => GetNode<TextureRect>("Team").Texture; private set => GetNode<TextureRect>("Team").Texture = value; }
+    public Texture2D CursorTexture { get => GetNode<TextureRect>("Cursor").Texture; private set => GetNode<TextureRect>("Cursor").Texture = value; }
 
     private int troops = 1;
     public int Troops { get => troops; set {
+            if (Engine.IsEditorHint())
+            {
+                return;
+            }
             troops = value;
-            GetNode<Label>("Control/Troops").Text = troops.ToString();
+            GetNode<Button>("MouseHandler").Text = troops.ToString();
+            
+            
         }
     }
 
     private Array<LandPrefab> borders = new Array<LandPrefab>();
     private Selection selection = Selection.NotSelected;
-    public Selection Selection { get => selection; set { 
+    public Selection Selection { get => selection; set {
+            if (Engine.IsEditorHint()) { return; }
             selection = value;
             switch (selection)
             {
@@ -45,6 +53,7 @@ public partial class LandPrefab : Node2D
 
     public int Team { get => team; set
         {
+            if (Engine.IsEditorHint()) { return; }
             team = value;
             TeamTexture= LandLoader.TeamTextures[team];
         } 
@@ -73,6 +82,7 @@ public partial class LandPrefab : Node2D
                     GD.Print(b.Name + " add " + Name);
                 }
             }
+            
         }
     }
 
@@ -83,7 +93,8 @@ public partial class LandPrefab : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        MouseHandler = (LandMouseHandler)GetChild(0);
+        if (Engine.IsEditorHint()) { return; }
+        MouseHandler = (LandMouseHandler)GetNode("MouseHandler");
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
