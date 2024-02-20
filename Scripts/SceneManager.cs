@@ -16,11 +16,8 @@ public partial class SceneManager : Control
 	public LandLoader LoadModena()
 	{
 		RemoveChild(GetNode("Menu"));
-		Control ui = (Control)GD.Load<PackedScene>("res://Scenes/UI.tscn").Instantiate();
-		AddChild(ui);
 		LandLoader modena = (LandLoader)GD.Load<PackedScene>("res://Scenes/land_loader_modena.tscn").Instantiate();
 		AddChild(modena);
-		ui.MoveToFront();
 		return modena;
 	}
 }

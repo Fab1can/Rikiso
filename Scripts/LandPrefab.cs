@@ -63,7 +63,7 @@ public partial class LandPrefab : Control
     public Array<LandPrefab> Borders
     {
         get => borders;
-        set
+        private set
         {
             foreach (LandPrefab b in borders)
             {
@@ -85,6 +85,9 @@ public partial class LandPrefab : Control
             
         }
     }
+
+    [Export]
+    public string Continent { get; private set; }
 
     public Rect2 Rect { get => GetChild<Sprite2D>(1).GetRect(); }
 

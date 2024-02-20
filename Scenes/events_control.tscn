@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://ci2kaurjye2yn"]
+
+[node name="EventsControl" type="VBoxContainer"]
+anchors_preset = -1
+anchor_right = 0.205
+anchor_bottom = 1.0
+offset_top = 193.0
+offset_right = -0.160019
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2

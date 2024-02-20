@@ -10,9 +10,11 @@ public partial class ButtonConnect : Button
 {
 	private NetworkManager networkManager;
 	[Export] private ButtonReady buttonReady;
+    [Export] private TextEdit hostEdit;
+    [Export] private TextEdit portEdit;
 
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+    // Called when the node enters the scene tree for the first time.
+    public override void _Ready()
 	{
 		networkManager = GetTree().Root.GetNode<NetworkManager>("SceneManager/NetworkManager");
 	}
@@ -26,8 +28,12 @@ public partial class ButtonConnect : Button
 	public override void _Pressed()
 	{
 		base._Pressed();
+		networkManager.Host = hostEdit.Text;
+		networkManager.Port = ushort.Parse(portEdit.Text);
 		Thread clientThread = new Thread(networkManager.StartClient);
 		clientThread.Start();
+		hostEdit.Editable = false;
+		portEdit.Editable = false;
 		buttonReady.Disabled = false;
 		Disabled = true;
 	}

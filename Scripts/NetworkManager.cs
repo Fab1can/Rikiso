@@ -5,6 +5,8 @@ using System.Text.Json;
 using System;
 using System.IO;
 using static Godot.Projection;
+using System.Linq;
+using static Godot.OpenXRHand;
 
 public partial class NetworkManager : Node
 {
@@ -22,6 +24,9 @@ public partial class NetworkManager : Node
     public int PlayerTeam;
     public Dictionary<string, (int Team, int Troops)> StartLands;
     public States State = States.Unconnected;
+
+    public string Host;
+    public ushort Port;
 	public override void _Ready()
 	{
         base._Ready();
@@ -51,13 +56,16 @@ public partial class NetworkManager : Node
                         switch (cmd)
                         {
                             case "attack":
-                                OnAttack(json["lands"]);
+                                OnAttack(json["dicesAtt"].AsArray(), json["dicesDef"].AsArray(), json["conquer"].AsValue().GetValue<bool>(), json["lands"]);
                                 break;
                             case "turn":
-                                onTurn(int.Parse(json["troops"].ToString()));
+                                onTurn(json["troops"].AsValue().GetValue<int>(), json["pre"].AsValue().GetValue<bool>());
                                 break;
                             case "place":
                                 onPlace(json["lands"]);
+                                break;
+                            case "move":
+                                onMove(json["lands"]);
                                 break;
                         }
                     }
@@ -67,18 +75,26 @@ public partial class NetworkManager : Node
         
     }
 
+    private void onMove(JsonNode lands)
+    {
+        landLoader.UpdateLands(getLands(lands.AsObject()));
+    }
+
     private void onPlace(JsonNode lands)
     {
         landLoader.UpdateLands(getLands(lands.AsObject()));
     }
 
-    private void onTurn(int troops)
+    private void onTurn(int troops, bool pre)
     {
-        landLoader.NextTurn(troops);
+        landLoader.NextTurn(troops, pre);
     }
 
-    private void OnAttack(JsonNode lands)
+    private void OnAttack(JsonArray dicesAtt, JsonArray dicesDef, bool conquer, JsonNode lands)
     {
+        string eventText = "Dadi attacco: "+ string.Join(", ", dicesAtt)+"\nDadi difesa: "+string.Join(", ", dicesDef)+(conquer?"\nTerritorio conquistato":"");
+        
+        landLoader.NotifyEvent(eventText);
         landLoader.UpdateLands(getLands(lands.AsObject()));
     }
 
@@ -118,19 +134,9 @@ public partial class NetworkManager : Node
 
     public void StartClient()
     {
-        if (!File.Exists("address.txt"))
-        {
-            using (StreamWriter outputFile = new StreamWriter("address.txt"))
-            {
-                outputFile.WriteLine("127.0.0.1");
-            }
-        }
-        
-        string ip = File.ReadAllLines("address.txt")[0];
-        int port = 18000;
 
         ws = new WebSocketPeer();
-        ws.ConnectToUrl("ws://" + ip + ":" + port);
+        ws.ConnectToUrl("ws://" + Host + ":" + Port);
         State = States.Connecting;
     }
 

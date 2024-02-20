@@ -12,11 +12,23 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 
-[node name="Connect" type="Button" parent="." node_paths=PackedStringArray("buttonReady")]
+[node name="HostEdit" type="TextEdit" parent="."]
+layout_mode = 2
+text = "127.0.0.1"
+scroll_fit_content_height = true
+
+[node name="PortEdit" type="TextEdit" parent="."]
+layout_mode = 2
+text = "18000"
+scroll_fit_content_height = true
+
+[node name="Connect" type="Button" parent="." node_paths=PackedStringArray("buttonReady", "hostEdit", "portEdit")]
 layout_mode = 2
 text = "Connettiti"
 script = ExtResource("1_mpqbt")
 buttonReady = NodePath("../Ready")
+hostEdit = NodePath("../HostEdit")
+portEdit = NodePath("../PortEdit")
 
 [node name="Ready" type="Button" parent="."]
 layout_mode = 2

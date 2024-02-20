@@ -24,11 +24,14 @@ public partial class LandLoader : Control
     private int turn = -1;
     private int playersNum = 0;
     private int troopsToPlace;
-
+    private bool isPreSelecting;
     public NetworkManager NetworkManager;
     public State CurrentState = State.Waiting;
 
-    private Control UI;
+    private Control UI = (Control)GD.Load<PackedScene>("res://Scenes/UI.tscn").Instantiate();
+    private Control Events = (Control)GD.Load<PackedScene>("res://Scenes/events_control.tscn").Instantiate();
+
+    [Export] private float eventTime = 5;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -43,7 +46,8 @@ public partial class LandLoader : Control
             TeamTextures[i] = GD.Load<Texture2D>("res://Textures/Box/Teams/" + colors[i] + ".png");
         }
 
-        UI = GetParent().GetNode<Control>("UI");
+        AddSibling(UI);
+        AddSibling(Events);
 
         NetworkManager = GetParent().GetNode<NetworkManager>("NetworkManager");
 
@@ -133,16 +137,18 @@ public partial class LandLoader : Control
         CurrentState = State.Attacking;
     }
 
-    internal void NextTurn(int troops)
+    internal void NextTurn(int troops, bool pre)
     {
         UnSelect();
         turn = (turn + 1) % playersNum;
+        NotifyEvent("Iniziato turno di " + colors[turn]);
         if (turn != NetworkManager.PlayerTeam) {
             CurrentState=State.Waiting;
             UI.GetNode<Label>("YourTurn").Hide();
         } else
         {
             troopsToPlace = troops;
+            isPreSelecting = pre;
             myTurn();
         }
     }
@@ -156,7 +162,15 @@ public partial class LandLoader : Control
         }
         else
         {
-            CurrentState = State.Selecting;
+            if (isPreSelecting)
+            {
+                NetworkManager.SendTurn();
+            }
+            else
+            {
+                CurrentState = State.Selecting;
+            }
+            
         }
     }
 
@@ -167,14 +181,22 @@ public partial class LandLoader : Control
         NetworkManager.Place(land);
         if(troopsToPlace == 0)
         {
-            CurrentState = State.Selecting;
-            UI.GetNode<Button>("Turn").Show();
+            if (!isPreSelecting)
+            {
+                CurrentState = State.Selecting;
+                UI.GetNode<Button>("Turn").Show();
+            }
+            
         }
     }
 
-    internal void Place(string land)
-    {
-        
+    internal void NotifyEvent(string eventText){
+        Label label = new Label() { Text = eventText };
+        Events.AddChild(label);
+        GetTree().CreateTimer(eventTime).Timeout += () =>
+        {
+            label.QueueFree();
+        };
     }
 }
 
@@ -183,5 +205,6 @@ public enum State
     Selecting,
     Attacking,
     Waiting,
-    Placing
+    Placing,
+    Moving
 }
