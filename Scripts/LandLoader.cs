@@ -63,7 +63,7 @@ public partial class LandLoader : Control
             landPrefabs[i].Team = NetworkManager.StartLands[landPrefabs[i].Name].Team;
             if (landPrefabs[i].Team>playersNum) { playersNum = landPrefabs[i].Team; }
             landPrefabs[i].Troops = NetworkManager.StartLands[landPrefabs[i].Name].Troops;
-            listaTerritori += "\"" + landPrefabs[i].Name + "\": { \"borders\" : ["+string.Join(",", landPrefabs[i].Borders.Select(x => "\""+x.Name+"\""))+"] },\n";
+            listaTerritori += "\"" + landPrefabs[i].Name + "\": { \"borders\" : ["+string.Join(",", landPrefabs[i].Borders.Select(x => "\""+x.Name+"\""))+"], \"continent\" : \"" + landPrefabs[i].Continent +"\" },\n";
             
         }
         playersNum++;

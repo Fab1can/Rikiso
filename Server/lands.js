@@ -1,5 +1,8 @@
 const lands = {
-    Albareto: { borders: ["S Matteo", "Crocetta", "Torrenova", "Navicello"] },
+    Albareto: {
+        borders: ["S Matteo", "Crocetta", "Torrenova", "Navicello"],
+        continent: "Azzurro",
+    },
     "Amendola Est": {
         borders: [
             "Modena Est",
@@ -9,6 +12,7 @@ const lands = {
             "Saliceta",
             "Amendola Ovest",
         ],
+        continent: "Bianco",
     },
     "Amendola Ovest": {
         borders: [
@@ -19,6 +23,7 @@ const lands = {
             "Madonnina",
             "Saliceta",
         ],
+        continent: "Bianco",
     },
     Baggiovara: {
         borders: [
@@ -28,8 +33,12 @@ const lands = {
             "S Maria Mugnano",
             "S Martino Mugnano",
         ],
+        continent: "Giallo",
     },
-    Bruciata: { borders: ["Cittanova", "Cognento", "Amendola Ovest"] },
+    Bruciata: {
+        borders: ["Cittanova", "Cognento", "Amendola Ovest"],
+        continent: "Bianco",
+    },
     Cittanova: {
         borders: [
             "Cognento",
@@ -39,6 +48,7 @@ const lands = {
             "Madonnina",
             "Tre Olmi",
         ],
+        continent: "Aqua",
     },
     Cognento: {
         borders: [
@@ -49,6 +59,7 @@ const lands = {
             "Amendola Ovest",
             "Bruciata",
         ],
+        continent: "Rosso",
     },
     Collegarola: {
         borders: [
@@ -58,6 +69,7 @@ const lands = {
             "Fossalta",
             "Portile",
         ],
+        continent: "Celeste",
     },
     Crocetta: {
         borders: [
@@ -68,6 +80,7 @@ const lands = {
             "Torrenova",
             "Modena Est",
         ],
+        continent: "Bianco",
     },
     Fossalta: {
         borders: [
@@ -77,8 +90,9 @@ const lands = {
             "S Damaso",
             "Saliceto sul Panaro",
         ],
+        continent: "Celeste",
     },
-    Ganaceto: { borders: ["Villanova", "Lesignana"] },
+    Ganaceto: { borders: ["Villanova", "Lesignana"], continent: "Lime" },
     "La Rotonda": {
         borders: [
             "Amendola Est",
@@ -87,6 +101,7 @@ const lands = {
             "Portile",
             "Collegarola",
         ],
+        continent: "Bianco",
     },
     Lesignana: {
         borders: [
@@ -96,6 +111,7 @@ const lands = {
             "Tre Olmi",
             "Ponte Alto",
         ],
+        continent: "Lime",
     },
     Madonnina: {
         borders: [
@@ -106,8 +122,9 @@ const lands = {
             "Amendola Ovest",
             "Tre Olmi",
         ],
+        continent: "Bianco",
     },
-    Marzaglia: { borders: ["Cittanova"] },
+    Marzaglia: { borders: ["Cittanova"], continent: "Aqua" },
     "Modena Est": {
         borders: [
             "Crocetta",
@@ -118,11 +135,13 @@ const lands = {
             "Fossalta",
             "Amendola Est",
         ],
+        continent: "Bianco",
     },
     Navicello: {
         borders: ["Albareto", "Modena Est", "Saliceto sul Panaro", "Torrenova"],
+        continent: "Azzurro",
     },
-    Paganine: { borders: ["Portile", "S Martino Mugnano"] },
+    Paganine: { borders: ["Portile", "S Martino Mugnano"], continent: "Viola" },
     "Ponte Alto": {
         borders: [
             "S Matteo",
@@ -132,6 +151,7 @@ const lands = {
             "Madonnina",
             "Crocetta",
         ],
+        continent: "Bianco",
     },
     Portile: {
         borders: [
@@ -142,16 +162,20 @@ const lands = {
             "Paganine",
             "S Maria Mugnano",
         ],
+        continent: "Viola",
     },
     "S Damaso": {
         borders: ["Collegarola", "Portile", "S Donnino", "Fossalta"],
+        continent: "Celeste",
     },
-    "S Donnino": { borders: ["Portile", "S Damaso"] },
+    "S Donnino": { borders: ["Portile", "S Damaso"], continent: "Celeste" },
     "S Maria Mugnano": {
         borders: ["La Rotonda", "Portile", "Baggiovara", "S Martino Mugnano"],
+        continent: "Viola",
     },
     "S Martino Mugnano": {
         borders: ["S Maria Mugnano", "Baggiovara", "Paganine"],
+        continent: "Viola",
     },
     "S Matteo": {
         borders: [
@@ -161,9 +185,11 @@ const lands = {
             "S Pancrazio",
             "Villanova",
         ],
+        continent: "Azzurro",
     },
     "S Pancrazio": {
         borders: ["S Matteo", "Villanova", "Lesignana", "Ponte Alto"],
+        continent: "Lime",
     },
     Saliceta: {
         borders: [
@@ -174,25 +200,54 @@ const lands = {
             "La Rotonda",
             "Villaggio Zeta",
         ],
+        continent: "Bianco",
     },
-    "Saliceto sul Panaro": { borders: ["Modena Est", "Fossalta", "Navicello"] },
-    Torrenova: { borders: ["Albareto", "Crocetta", "Modena Est", "Navicello"] },
+    "Saliceto sul Panaro": {
+        borders: ["Modena Est", "Fossalta", "Navicello"],
+        continent: "Azzurro",
+    },
+    Torrenova: {
+        borders: ["Albareto", "Crocetta", "Modena Est", "Navicello"],
+        continent: "Bianco",
+    },
     "Tre Olmi": {
         borders: ["Cittanova", "Lesignana", "Ponte Alto", "Madonnina"],
+        continent: "Lime",
     },
-    "Villaggio Zeta": { borders: ["Cognento", "Amendola Ovest", "Saliceta"] },
+    "Villaggio Zeta": {
+        borders: ["Cognento", "Amendola Ovest", "Saliceta"],
+        continent: "Bianco",
+    },
     Villanova: {
         borders: ["S Matteo", "S Pancrazio", "Lesignana", "Ganaceto"],
+        continent: "Lime",
     },
 };
 
-let troopsTot = 40;
+const continents = {
+    Aqua: 2,
+    Rosso: 1,
+    Giallo: 0,
+    Lime: 3,
+    Azzurro: 3,
+    Celeste: 3,
+    Viola: 3,
+    Bianco: 6,
+};
 
-function getInitialPlayerTroops(playersNum, playerId){
-    return (troopsTot%playersNum==0)?troopsTot/playersNum : (parseInt(troopsTot/playersNum)+(playerId<playersNum-troopsTot%playersNum)?1:0);
+let troopsTot = 20;
+
+function getInitialPlayerTroops(playersNum, playerId) {
+    return troopsTot % playersNum == 0
+        ? troopsTot / playersNum
+        : parseInt(troopsTot / playersNum) +
+          (playerId < playersNum - (troopsTot % playersNum))
+        ? 1
+        : 0;
 }
 
 module.exports = {
     lands: lands,
-    getInitialPlayerTroops: getInitialPlayerTroops
+    continents: continents,
+    getInitialPlayerTroops: getInitialPlayerTroops,
 };

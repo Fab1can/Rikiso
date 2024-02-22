@@ -43,14 +43,14 @@ offset_top = 62.0
 offset_right = 93.0
 offset_bottom = 62.0
 Borders = [NodePath("../Modena Est"), NodePath("../Fossalta"), NodePath("../Collegarola"), NodePath("../La Rotonda"), NodePath("../Saliceta"), NodePath("../Amendola Ovest")]
-Continent = "Grigio"
+Continent = "Bianco"
 
 [node name="Amendola Ovest" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
 offset_top = -32.0
 offset_bottom = -32.0
 Borders = [NodePath("../Cognento"), NodePath("../Amendola Est"), NodePath("../Villaggio Zeta"), NodePath("../Bruciata"), NodePath("../Madonnina"), NodePath("../Saliceta")]
-Continent = "Grigio"
+Continent = "Bianco"
 
 [node name="Baggiovara" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -68,7 +68,7 @@ offset_top = -18.0
 offset_right = -66.0
 offset_bottom = -18.0
 Borders = [NodePath("../Cittanova"), NodePath("../Cognento"), NodePath("../Amendola Ovest")]
-Continent = "Grigio"
+Continent = "Bianco"
 
 [node name="Cittanova" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -86,7 +86,7 @@ offset_top = 71.0
 offset_right = -97.0
 offset_bottom = 71.0
 Borders = [NodePath("../Cittanova"), NodePath("../Baggiovara"), NodePath("../Villaggio Zeta"), NodePath("../Saliceta"), NodePath("../Amendola Ovest"), NodePath("../Bruciata")]
-Continent = "Arancione"
+Continent = "Rosso"
 
 [node name="Collegarola" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -95,7 +95,7 @@ offset_top = 106.0
 offset_right = 174.0
 offset_bottom = 106.0
 Borders = [NodePath("../Amendola Est"), NodePath("../La Rotonda"), NodePath("../S Damaso"), NodePath("../Fossalta"), NodePath("../Portile")]
-Continent = "Blu"
+Continent = "Celeste"
 
 [node name="Crocetta" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -104,7 +104,7 @@ offset_top = -86.0
 offset_right = 107.0
 offset_bottom = -86.0
 Borders = [NodePath("../Albareto"), NodePath("../S Matteo"), NodePath("../Ponte Alto"), NodePath("../Madonnina"), NodePath("../Torrenova"), NodePath("../Modena Est")]
-Continent = "Grigio"
+Continent = "Bianco"
 
 [node name="Fossalta" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -113,7 +113,7 @@ offset_top = 92.0
 offset_right = 263.0
 offset_bottom = 92.0
 Borders = [NodePath("../Modena Est"), NodePath("../Amendola Est"), NodePath("../Collegarola"), NodePath("../S Damaso"), NodePath("../Saliceto sul Panaro")]
-Continent = "Blu"
+Continent = "Celeste"
 
 [node name="Ganaceto" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -122,7 +122,7 @@ offset_top = -235.0
 offset_right = -5.0
 offset_bottom = -235.0
 Borders = [NodePath("../Villanova"), NodePath("../Lesignana")]
-Continent = "Verde"
+Continent = "Lime"
 
 [node name="La Rotonda" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -131,7 +131,7 @@ offset_top = 125.0
 offset_right = 130.0
 offset_bottom = 125.0
 Borders = [NodePath("../Amendola Est"), NodePath("../Saliceta"), NodePath("../S Maria Mugnano"), NodePath("../Portile"), NodePath("../Collegarola")]
-Continent = "Grigio"
+Continent = "Bianco"
 
 [node name="Lesignana" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -140,7 +140,7 @@ offset_top = -164.0
 offset_right = -15.0
 offset_bottom = -164.0
 Borders = [NodePath("../Villanova"), NodePath("../Ganaceto"), NodePath("../S Pancrazio"), NodePath("../Tre Olmi"), NodePath("../Ponte Alto")]
-Continent = "Verde"
+Continent = "Lime"
 
 [node name="Madonnina" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -149,7 +149,7 @@ offset_top = -66.0
 offset_right = 39.0
 offset_bottom = -66.0
 Borders = [NodePath("../Cittanova"), NodePath("../Ponte Alto"), NodePath("../Crocetta"), NodePath("../Modena Est"), NodePath("../Amendola Ovest"), NodePath("../Tre Olmi")]
-Continent = "Grigio"
+Continent = "Bianco"
 
 [node name="Marzaglia" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -167,7 +167,7 @@ offset_top = -51.0
 offset_right = 140.0
 offset_bottom = -51.0
 Borders = [NodePath("../Crocetta"), NodePath("../Madonnina"), NodePath("../Torrenova"), NodePath("../Navicello"), NodePath("../Saliceto sul Panaro"), NodePath("../Fossalta"), NodePath("../Amendola Est")]
-Continent = "Grigio"
+Continent = "Bianco"
 
 [node name="Navicello" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -185,7 +185,7 @@ offset_top = 251.0
 offset_right = 121.0
 offset_bottom = 251.0
 Borders = [NodePath("../Portile"), NodePath("../S Martino Mugnano")]
-Continent = "Porpora"
+Continent = "Viola"
 
 [node name="Ponte Alto" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -194,7 +194,7 @@ offset_top = -105.0
 offset_right = 16.0
 offset_bottom = -105.0
 Borders = [NodePath("../S Matteo"), NodePath("../Lesignana"), NodePath("../Tre Olmi"), NodePath("../S Pancrazio"), NodePath("../Madonnina"), NodePath("../Crocetta")]
-Continent = "Grigio"
+Continent = "Bianco"
 
 [node name="Portile" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -203,7 +203,7 @@ offset_top = 198.0
 offset_right = 135.0
 offset_bottom = 198.0
 Borders = [NodePath("../La Rotonda"), NodePath("../Collegarola"), NodePath("../S Damaso"), NodePath("../S Donnino"), NodePath("../Paganine"), NodePath("../S Maria Mugnano")]
-Continent = "Porpora"
+Continent = "Viola"
 
 [node name="S Damaso" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -212,7 +212,7 @@ offset_top = 172.0
 offset_right = 233.0
 offset_bottom = 172.0
 Borders = [NodePath("../Collegarola"), NodePath("../Portile"), NodePath("../S Donnino"), NodePath("../Fossalta")]
-Continent = "Blu"
+Continent = "Celeste"
 
 [node name="S Donnino" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -221,7 +221,7 @@ offset_top = 227.0
 offset_right = 234.0
 offset_bottom = 227.0
 Borders = [NodePath("../Portile"), NodePath("../S Damaso")]
-Continent = "Blu"
+Continent = "Celeste"
 
 [node name="S Maria Mugnano" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -230,7 +230,7 @@ offset_top = 172.0
 offset_right = 64.0
 offset_bottom = 172.0
 Borders = [NodePath("../La Rotonda"), NodePath("../Portile"), NodePath("../Baggiovara"), NodePath("../S Martino Mugnano")]
-Continent = "Porpora"
+Continent = "Viola"
 
 [node name="S Martino Mugnano" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -239,7 +239,7 @@ offset_top = 214.0
 offset_right = 51.0
 offset_bottom = 214.0
 Borders = [NodePath("../S Maria Mugnano"), NodePath("../Baggiovara"), NodePath("../Paganine")]
-Continent = "Porpora"
+Continent = "Viola"
 
 [node name="S Matteo" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -257,7 +257,7 @@ offset_top = -152.0
 offset_right = 57.0
 offset_bottom = -152.0
 Borders = [NodePath("../S Matteo"), NodePath("../Villanova"), NodePath("../Lesignana"), NodePath("../Ponte Alto")]
-Continent = "Verde"
+Continent = "Lime"
 
 [node name="Saliceta" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -266,7 +266,7 @@ offset_top = 102.0
 offset_right = 26.0
 offset_bottom = 102.0
 Borders = [NodePath("../Cognento"), NodePath("../Amendola Est"), NodePath("../Amendola Ovest"), NodePath("../Baggiovara"), NodePath("../La Rotonda"), NodePath("../Villaggio Zeta")]
-Continent = "Grigio"
+Continent = "Bianco"
 
 [node name="Saliceto sul Panaro" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -284,7 +284,7 @@ offset_top = -98.0
 offset_right = 161.0
 offset_bottom = -98.0
 Borders = [NodePath("../Albareto"), NodePath("../Crocetta"), NodePath("../Modena Est"), NodePath("../Navicello")]
-Continent = "Grigio"
+Continent = "Bianco"
 
 [node name="Tre Olmi" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -293,7 +293,7 @@ offset_top = -107.0
 offset_right = -49.0
 offset_bottom = -107.0
 Borders = [NodePath("../Cittanova"), NodePath("../Lesignana"), NodePath("../Ponte Alto"), NodePath("../Madonnina")]
-Continent = "Verde"
+Continent = "Lime"
 
 [node name="Villaggio Zeta" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -302,7 +302,7 @@ offset_top = 42.0
 offset_right = -33.0
 offset_bottom = 42.0
 Borders = [NodePath("../Cognento"), NodePath("../Amendola Ovest"), NodePath("../Saliceta")]
-Continent = "Grigio"
+Continent = "Bianco"
 
 [node name="Villanova" parent="." node_paths=PackedStringArray("Borders") instance=ExtResource("2_ec40h")]
 layout_mode = 1
@@ -311,4 +311,4 @@ offset_top = -203.0
 offset_right = 63.0
 offset_bottom = -203.0
 Borders = [NodePath("../S Matteo"), NodePath("../S Pancrazio"), NodePath("../Lesignana"), NodePath("../Ganaceto")]
-Continent = "Verde"
+Continent = "Lime"
